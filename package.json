@@ -31,7 +31,8 @@
     "jsdom": "^24.1.0",
     "@testing-library/react": "^15.0.0",
     "@testing-library/jest-dom": "^6.4.0",
-    "@sentry/nextjs": "^8.0.0"
+    "@sentry/nextjs": "^8.0.0",
+    "next": "14.2.0"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {

@@ -1,0 +1,5 @@
+{
+  "buildCommand": "pnpm --filter @agentcy/mission-control build",
+  "outputDirectory": "apps/mission-control/.next",
+  "framework": "nextjs"
+}

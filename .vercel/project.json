@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_QJStr0b3mTH6Ifa8wPUaDcEjsnhr",
+  "orgId": "team_TevTo1Pd1dD97ocUiFLDh5BN",
+  "projectName": "mission-control",
+  "settings": {
+    "createdAt": 1780350421594,
+    "framework": "nextjs",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": "apps/mission-control",
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}
