@@ -1,0 +1,58 @@
+import { CatalogPlugin } from './components/types';
+
+export const catalogPlugins: CatalogPlugin[] = [
+  {
+    slug: 'slack-notifier',
+    name: 'Slack Notifier',
+    description: 'Send alerts and deployment notifications to Slack channels',
+    author: 'Agentcy',
+    version: '1.0.0',
+    category: 'notifications',
+    manifest_json: { permissions: ['read:projects', 'write:alerts'], hooks: { 'alert:triggered': 'onAlert', 'deployment:ready': 'onDeploy' } },
+  },
+  {
+    slug: 'linear-sync',
+    name: 'Linear Sync',
+    description: 'Auto-create Linear tickets from Sentry errors and incidents',
+    author: 'Agentcy',
+    version: '1.2.0',
+    category: 'ticketing',
+    manifest_json: { permissions: ['read:incidents', 'read:events'], hooks: { 'incident:created': 'onIncident', 'sentry:error': 'onError' } },
+  },
+  {
+    slug: 'cloudflare-purger',
+    name: 'Cloudflare Cache Purger',
+    description: 'Purge CDN cache automatically after deployments',
+    author: 'Agentcy',
+    version: '0.9.0',
+    category: 'infrastructure',
+    manifest_json: { permissions: ['read:deployments', 'write:integrations'], hooks: { 'deployment:ready': 'onDeploy' } },
+  },
+  {
+    slug: 'github-checks',
+    name: 'GitHub Checks',
+    description: 'Post deployment status and security scan results to PRs',
+    author: 'Agentcy',
+    version: '1.1.0',
+    category: 'ci-cd',
+    manifest_json: { permissions: ['read:deployments', 'read:security'], hooks: { 'deployment:updated': 'onDeploy', 'security:scan_completed': 'onScan' } },
+  },
+  {
+    slug: 'pagerduty-escalation',
+    name: 'PagerDuty Escalation',
+    description: 'Escalate critical incidents to PagerDuty on-call schedules',
+    author: 'Agentcy',
+    version: '1.0.0',
+    category: 'incident-response',
+    manifest_json: { permissions: ['read:incidents', 'write:integrations'], hooks: { 'incident:escalated': 'onEscalate' } },
+  },
+  {
+    slug: 'stripe-billing',
+    name: 'Stripe Billing',
+    description: 'Client billing, usage metering, and invoice generation',
+    author: 'Agentcy',
+    version: '2.0.0',
+    category: 'billing',
+    manifest_json: { permissions: ['read:costs', 'read:clients', 'write:invoices'], hooks: { 'cost:threshold_reached': 'onThreshold' } },
+  },
+];

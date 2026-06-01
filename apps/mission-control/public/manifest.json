@@ -1,0 +1,18 @@
+{
+  "name": "Agentcy Control - Mission Control",
+  "short_name": "Agentcy Control",
+  "description": "Unified monitoring, control, and deployment management for your apps and clients",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

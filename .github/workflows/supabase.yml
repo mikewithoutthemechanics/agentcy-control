@@ -1,0 +1,85 @@
+name: Supabase
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'supabase/**'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'supabase/**'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-migrations:
+    name: Lint Migrations
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start Supabase local
+        run: supabase start
+
+      - name: Lint migrations
+        run: supabase db lint
+
+      - name: Stop Supabase
+        if: always()
+        run: supabase stop
+
+  deploy-functions:
+    name: Deploy Edge Functions
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: [lint-migrations]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Deploy functions
+        run: |
+          supabase functions deploy copilot --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+          supabase functions deploy synthetic-checker --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+          supabase functions deploy secure-store --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+          supabase functions deploy ingest-vercel --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+          supabase functions deploy ingest-sentry --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+          supabase functions deploy ingest-posthog --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+  set-secrets:
+    name: Set Edge Function Secrets
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: [deploy-functions]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Set secrets
+        run: |
+          supabase secrets set GROQ_API_KEY="${{ secrets.GROQ_API_KEY }}" --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+          supabase secrets set ENCRYPTION_MASTER_KEY="${{ secrets.ENCRYPTION_MASTER_KEY }}" --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
