@@ -36,3 +36,6 @@ yarn-error.log*
 .branches
 temp
 docker-compose.sandbox.yml
+
+# Temporary deploy directories
+deploy-*

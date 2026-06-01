@@ -49,7 +49,7 @@ export default function ProjectsPage() {
           <h1 className="text-2xl font-bold text-slate-900">Projects</h1>
           <p className="text-sm text-slate-500 mt-1">Manage your applications and client projects</p>
         </div>
-        <Link href="/projects/new">
+        <Link href="/projects/create">
           <Button>
             <Plus className="h-4 w-4 mr-2" />
             New Project
@@ -74,7 +74,7 @@ export default function ProjectsPage() {
               Connect your first project to start monitoring deployments, errors, and analytics in one place.
             </p>
             <div className="mt-6">
-              <Link href="/projects/new">
+              <Link href="/projects/create">
                 <Button>
                   <Plus className="h-4 w-4 mr-2" />
                   Create Project
