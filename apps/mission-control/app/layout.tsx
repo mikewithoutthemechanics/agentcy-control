@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: 'Agentcy Control - Mission Control',
   description: 'Unified monitoring, control, and deployment management for your apps and clients',
   manifest: '/manifest.json',
+  icons: {
+    icon: '/favicon.svg',
+  },
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
